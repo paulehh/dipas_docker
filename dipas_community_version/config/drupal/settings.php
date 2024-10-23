@@ -74,21 +74,19 @@
  *
  * The next section describes how to customize the $databases array for more
  * specific needs.
- *
- * @code
- * $databases['default']['default'] = array (
- *   'database' => 'databasename',
- *   'username' => 'sqlusername',
- *   'password' => 'sqlpassword',
- *   'host' => 'localhost',
- *   'port' => '3306',
- *   'driver' => 'mysql',
- *   'prefix' => '',
- *   'collation' => 'utf8mb4_general_ci',
- * );
- * @endcode
  */
-$databases = [];
+
+$databases['default']['default'] = array (
+  'database' => '${DB_NAME}',
+  'username' => '${DB_USER}',
+  'password' => '${DB_PASSWORD}',
+  'host' => '${DB_HOST}',
+  'port' => '${DB_PORT}',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\pgsql',
+  'driver' => 'pgsql',
+  'prefix' => '',
+);
+
 
 /**
  * Customizing database settings.
@@ -280,7 +278,7 @@ $config_directories = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+#$settings['hash_salt'] = '';
 
 /**
  * Deployment identifier.
