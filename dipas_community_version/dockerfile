@@ -49,8 +49,5 @@ RUN mkdir -p /var/www/tmp \
     && chown www-data:www-data /var/www/tmp \
     && chmod 777 /var/www/tmp
 
-# Set Apache ServerName
-#RUN echo "ServerName kartenmitwirkung.de" >> /etc/apache2/apache2.conf
-
 # Disable default site and enable custom site configuration
 RUN a2dissite 000-default.conf && a2ensite yourdomain.de.conf
