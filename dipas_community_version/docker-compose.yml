@@ -22,6 +22,7 @@ services:
       DRUPAL_ADMIN_USER: ${DRUPAL_ADMIN_USER}
       DRUPAL_ADMIN_PASS: ${DRUPAL_ADMIN_PASS}
       DRUPAL_SITE_NAME: ${DRUPAL_SITE_NAME}
+      DRUPAL_SITE_DOMAIN: ${DRUPAL_SITE_DOMAIN}
     volumes:
       - drupal-data:/var/www/html/dipas/htdocs/drupal/sites/default/files
     networks:
