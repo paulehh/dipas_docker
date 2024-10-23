@@ -1,6 +1,6 @@
 FROM php:8.1-apache
 
-# Install necessary libraries, PHP extensions, PostgreSQL client, and tools for handling ZIP files
+# Install necessary libraries, PHP extensions, PostgreSQL client, and tools for handling ZIP files, including envsubst
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     libfreetype6-dev \
@@ -9,8 +9,10 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     unzip \
     rsync \
+    gettext-base \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo_pgsql
+
 
 # Copy the zip file from the host
 COPY ./dipas-3.3.1-navigator-3.1.1.zip /tmp/dipas.zip
@@ -23,8 +25,9 @@ RUN unzip /tmp/dipas.zip -d /tmp/dipas \
 # Copy the settings.php file from the host and overwrite the existing file
 COPY ./config/drupal/settings.php /var/www/html/dipas/htdocs/drupal/sites/default/settings.php
 
-# Copy the drupal.services.yml file from the host into the config directory
-COPY ./config/drupal/drupal.services.yml /var/www/html/dipas/config/drupal.services.yml
+# Copy entrypoint script to handle runtime substitution
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Copy Apache configuration
 COPY ./config/apache/yourdomain.de.conf /etc/apache2/sites-available/
@@ -51,3 +54,7 @@ RUN mkdir -p /var/www/tmp \
 
 # Disable default site and enable custom site configuration
 RUN a2dissite 000-default.conf && a2ensite yourdomain.de.conf
+
+# Use the entrypoint script for runtime environment variable substitution
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["apache2-foreground"]
