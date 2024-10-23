@@ -23,10 +23,7 @@ services:
       DRUPAL_SITE_NAME: ${DRUPAL_SITE_NAME}
     volumes:
       - drupal-data:/var/www/html/dipas/htdocs/drupal/sites/default/files 
-      - ./config/apache/kartenmitwirkung.de.conf:/etc/apache2/sites-available/yourdomain.de.conf:ro
-      - ./config/drupal/settings.php:/var/www/html/dipas/htdocs/drupal/sites/default/settings.php
-      - ./config/drupal/drupal.services.yml:/var/www/html/dipas/htdocs/config/drupal.services.yml
-
+      - ./kartenmitwirkung.de.conf:/etc/apache2/sites-available/kartenmitwirkung.de.conf:ro
     networks:
       - dipas-network
     command: /bin/sh -c "cd /var/www/html/dipas/htdocs && vendor/bin/drush site-install --db-url=pgsql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME} --account-name=${DRUPAL_ADMIN_USER} --account-pass=${DRUPAL_ADMIN_PASS} --site-name='${DRUPAL_SITE_NAME}' --existing-config -y && vendor/bin/drush config-set config_ignore.settings ignored_config_entities '' -y && vendor/bin/drush config-import -y && vendor/bin/drush cache-rebuild && apache2-foreground"
