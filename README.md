@@ -43,8 +43,11 @@ Once the installation is complete, you can log in to the DIPAS system at:
 ```
 http://yourhost.de/drupal
 ```
-### Step 7: Create DIPAS Default Proceeding
-Go to --> DIPAS --> Proceedings --> Proceedings and "+ Add Proceeding". In the Interface click on "speichern"
+### Step 7: Create DIPAS Template Proceeding (default)
+Go to --> DIPAS --> Proceedings --> Proceedings and "+ Add Proceeding". In the Interface click on "speichern". The default proceeding is your template from which all new proceedings will be build up.
+
+### Step 8: Administer DIPAS Template Proceeding
+Follow these steps: https://wiki.dipas.org/index.php/Verfahrensvorlage_erstellen#Technische_Vorarbeiten
 
 ### Step 8: Create DIPAS Test Proceeding
 Go to --> DIPAS --> Proceedings --> Proceedings and "+ Add Proceeding". In the Interface type hostname e.g "test" (this will be the subdomain of your new proceeding) and name of your proceeding, e.g. "test". click speichern.
