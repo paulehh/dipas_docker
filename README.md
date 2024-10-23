@@ -53,6 +53,6 @@ Follow these steps: https://wiki.dipas.org/index.php/Verfahrensvorlage_erstellen
 Go to --> DIPAS --> Proceedings --> Proceedings and "+ Add Proceeding". In the Interface type hostname e.g "test" (this will be the subdomain of your new proceeding) and name of your proceeding, e.g. "test". click speichern.
 
 ### Step 9: Access your Test Proceeding
-go to test.yourdomain.de and test your proceeding frontend
+go to test.yourdomain.de/drupal and finalize the configuration of your proceeding or go to test.yourdomain.de to see the frontend.
 
 
