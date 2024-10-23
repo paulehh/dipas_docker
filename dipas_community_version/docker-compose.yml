@@ -26,14 +26,7 @@ services:
       - drupal-data:/var/www/html/dipas/htdocs/drupal/sites/default/files
     networks:
       - dipas-network
-    command: /bin/sh -c "echo 'ServerName ${DRUPAL_SITE_NAME}' >> /etc/apache2/conf-available/servername.conf && a2enconf servername && \
-      if [ \"$(PGPASSWORD=${DB_PASSWORD} psql -h ${DB_HOST} -U ${DB_USER} -d ${DB_NAME} -tAc \"SELECT COUNT(*) FROM pg_tables WHERE tablename = 'key_value';\")\" = '0' ]; then \
-      cd /var/www/html/dipas/htdocs && \
-      vendor/bin/drush site-install --account-name=${DRUPAL_ADMIN_USER} --account-pass=${DRUPAL_ADMIN_PASS} --site-name='${DRUPAL_SITE_NAME}' --existing-config -y && \
-      vendor/bin/drush config-set config_ignore.settings ignored_config_entities '' -y && \
-      vendor/bin/drush config-import -y && \
-      vendor/bin/drush cache-rebuild; \
-      fi && apache2-foreground"
+    command: /bin/sh -c "echo 'ServerName ${DRUPAL_SITE_NAME}' >> /etc/apache2/conf-available/servername.conf && a2enconf servername && cd /var/www/html/dipas/htdocs && vendor/bin/drush site-install --db-url=pgsql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME} --account-name=${DRUPAL_ADMIN_USER} --account-pass=${DRUPAL_ADMIN_PASS} --site-name='${DRUPAL_SITE_NAME}' --existing-config -y && vendor/bin/drush config-set config_ignore.settings ignored_config_entities '' -y && vendor/bin/drush config-import -y && vendor/bin/drush cache-rebuild && apache2-foreground"
 
   db:
     image: postgres:15
@@ -58,3 +51,4 @@ volumes:
 
 networks:
   dipas-network:
+
