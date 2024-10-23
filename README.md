@@ -6,6 +6,8 @@ The docker-compose.yml was created for initial setup and installation of DIPAS.
 
 ## Steps to Get Started
 
+Make sure that you have docker and docker-compose installed 
+
 ### Step 1: Clone the Repository
 Clone the repository to your host machine:
 
