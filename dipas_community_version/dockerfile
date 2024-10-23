@@ -24,7 +24,7 @@ RUN unzip /tmp/dipas.zip -d /tmp/dipas \
 COPY ./config/drupal/settings.php /var/www/html/dipas/htdocs/drupal/sites/default/settings.php
 
 # Copy the drupal.services.yml file from the host into the config directory
-COPY ./config/drupal/drupal.services.yml /var/www/html/dipas/htdocs/config/drupal.services.yml
+COPY ./config/drupal/drupal.services.yml /var/www/html/dipas/config/drupal.services.yml
 
 # Copy Apache configuration
 COPY ./config/apache/yourdomain.de.conf /etc/apache2/sites-available/
