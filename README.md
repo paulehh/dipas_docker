@@ -2,7 +2,7 @@
 # DIPAS Docker
 
 This project provides a Test Docker setup for the DIPAS (Digital Participation System). The docker-compose.yml was created for initial setup and installation of DIPAS.
-For the moment there is only a setup for the DIPAS Community Version. A Setup for DIPAS Public Version will be added soon.
+For the moment there is only a setup for the DIPAS Community Version (dipas-3.3.1-navigator-3.1.1). A Setup for DIPAS Public Version will be added soon.
 
 
 ## Steps to Get Started
@@ -23,7 +23,7 @@ git clone https://github.com/matlendzi/dipas_docker.git
 
 
 ### Step 3: Download the Latest DIPAS Community Version
-Download the latest version of the **DIPAS Community** as a ZIP file from the [official Bitbucket repository](https://bitbucket.org/geowerkstatt-hamburg/dipas_community/downloads/).
+Download the dipas-3.3.1-navigator-3.1.1.zip version of the **DIPAS Community** as a ZIP file from the [official Bitbucket repository](https://bitbucket.org/geowerkstatt-hamburg/dipas_community/downloads/).
 
 
 Place the downloaded ZIP file in the `dipas_community_version` folder on your host.
