@@ -1,8 +1,9 @@
 
 # DIPAS Docker
 
-This project provides a Test Docker setup for the DIPAS (Digital Participation System). For the moment there is only a setup for the DIPAS Community Version. A Setup for DIPAS Public Version will be added soon.
-The docker-compose.yml was created for initial setup and installation of DIPAS.
+This project provides a Test Docker setup for the DIPAS (Digital Participation System). The docker-compose.yml was created for initial setup and installation of DIPAS.
+For the moment there is only a setup for the DIPAS Community Version. A Setup for DIPAS Public Version will be added soon.
+
 
 ## Steps to Get Started
 
