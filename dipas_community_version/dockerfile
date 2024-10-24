@@ -1,63 +1,31 @@
 FROM php:8.1-apache
 
-# Install necessary libraries, PHP extensions, PostgreSQL client, and tools for handling ZIP files, including envsubst
+# Install necessary libraries, PHP extensions, PostgreSQL client, and tools for handling ZIP files
 RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    postgresql-client \
-    unzip \
-    rsync \
-    gettext-base \
+    libpq-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev postgresql-client unzip rsync gettext-base \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_pgsql
+    && docker-php-ext-install -j$(nproc) gd pdo_pgsql \
+    && rm -rf /var/lib/apt/lists/*
 
-
-# Copy the zip file from the host
+# Copy and extract project files
 COPY ./dipas-3.3.1-navigator-3.1.1.zip /tmp/dipas.zip
-
-# Unzip the downloaded project
 RUN unzip /tmp/dipas.zip -d /tmp/dipas \
     && rsync -av /tmp/dipas/ /var/www/html/dipas/ \
     && rm -rf /tmp/dipas /tmp/dipas.zip
 
-# Copy the settings.php file from the host and overwrite the existing file
+# Copy configuration files
 COPY ./config/drupal/settings.php /var/www/html/dipas/htdocs/drupal/sites/default/settings.php
-
-# Copy the drupal.services.yml file from the host and overwrite the existing file
 COPY ./config/drupal/drupal.services.yml /var/www/html/dipas/config/drupal.services.yml
 
-# Copy entrypoint script to handle runtime substitution
+# Copy and set entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Copy Apache configuration
+# Configure Apache and PHP
 COPY ./config/apache/yourdomain.de.conf /etc/apache2/sites-available/
+RUN a2enmod rewrite && a2dissite 000-default.conf && a2ensite yourdomain.de.conf \
+    && echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
-
-# Set PHP memory limit to 512M
-RUN echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini
-
-# Set permissions for project files, including settings.php and drupal.services.yml
-RUN chown -R www-data:www-data /var/www/html/dipas/htdocs/drupal \
-    && chmod -R 750 /var/www/html/dipas/htdocs/drupal \
-    && chmod 444 /var/www/html/dipas/htdocs/drupal/.htaccess \
-    && chmod 440 /var/www/html/dipas/htdocs/drupal/sites/default/settings.* \
-    && chmod 440 /var/www/html/dipas/config/drupal.services.yml \
-    && chmod -R 775 /var/www/html/dipas/htdocs/drupal/sites/default/files \
-    && find /var/www/html/dipas/htdocs/drupal/sites/default/files -type f -exec chmod 664 {} \;
-
-# Create the /var/www/tmp directory for Drupal's temporary files and set ownership and permissions
-RUN mkdir -p /var/www/html tmp \
-    && chown www-data:www-data /var/www/html/tmp \
-    && chmod 777 /var/www/html/tmp
-
-# Disable default site and enable custom site configuration
-RUN a2dissite 000-default.conf && a2ensite yourdomain.de.conf
-
-# Use the entrypoint script for runtime environment variable substitution
+# Set entrypoint and default command
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]
