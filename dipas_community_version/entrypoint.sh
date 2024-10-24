@@ -21,11 +21,10 @@ if PGPASSWORD="${DB_PASSWORD}" psql -h "${DB_HOST}" -U "${DB_USER}" -d "${DB_NAM
         && chmod 644 /var/www/html/dipas/config/drupal.services.yml \
         && chmod -R 775 /var/www/html/dipas/htdocs/drupal/sites/default/files \
         && find /var/www/html/dipas/htdocs/drupal/sites/default/files -type f -exec chmod 664 {} \;
+    echo "DIPAS setup is ready!"
     exec "$@"  # Execute the original command
 else
     echo "Admin user '${DRUPAL_ADMIN_USER}' does not exist. Proceeding with setup..."
-    
-    # Proceed with installation steps here
 
     # Substitute environment variables into settings.php and drupal.services.yml
     envsubst '${DB_NAME} ${DB_USER} ${DB_PASSWORD} ${DB_HOST} ${DB_PORT} ${DRUPAL_SITE_DOMAIN}' < /var/www/html/dipas/htdocs/drupal/sites/default/settings.php > /var/www/html/dipas/htdocs/drupal/sites/default/settings.tmp.php
@@ -57,6 +56,17 @@ else
     # Import configuration and rebuild caches
     su www-data -s /bin/bash -c "vendor/bin/drush config-import -y"
     su www-data -s /bin/bash -c "vendor/bin/drush cache-rebuild"
+
+    # Set correct file permissions after Drush install
+    chown -R www-data:www-data /var/www/html/dipas/htdocs/drupal \
+        && chmod -R 750 /var/www/html/dipas/htdocs/drupal \
+        && chmod 444 /var/www/html/dipas/htdocs/drupal/.htaccess \
+        && chmod 440 /var/www/html/dipas/htdocs/drupal/sites/default/settings.* \
+        && chmod 644 /var/www/html/dipas/config/drupal.services.yml \
+        && chmod -R 775 /var/www/html/dipas/htdocs/drupal/sites/default/files \
+        && find /var/www/html/dipas/htdocs/drupal/sites/default/files -type f -exec chmod 664 {} \;
+
+    echo "DIPAS setup is ready!"
 fi
 
 # Execute the main CMD (start Apache)
