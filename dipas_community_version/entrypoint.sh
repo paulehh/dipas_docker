@@ -52,9 +52,9 @@ else
 
     # Import translation files
     su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/config/de.po --type=not-customized --overwrite"
-    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/dipas_stories/files/translations/dipas_stories.de.po --type=not-customized --overwrite"
-    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/dipas/files/translations/dipas.de.po --type=not-customized --overwrite"
-    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/masterportal/files/translations/masterportal.de.po --type=not-customized --overwrite"
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/dipas_stories/files/translations/dipas_stories.de.po --type=not-customized"
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/dipas/files/translations/dipas.de.po --type=not-customized"
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/masterportal/files/translations/masterportal.de.po --type=not-customized"
 
     # Apply translation updates
     su www-data -s /bin/bash -c "vendor/bin/drush locale:check"
