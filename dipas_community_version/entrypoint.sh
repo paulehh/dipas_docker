@@ -50,12 +50,15 @@ else
     --account-name=${DRUPAL_ADMIN_USER} --account-pass=${DRUPAL_ADMIN_PASS} \
     --site-name='${DRUPAL_SITE_NAME}' --yes --existing-config"
 
-    # Set ignored config entities to avoid issues with imported configurations
-    su www-data -s /bin/bash -c "vendor/bin/drush config-set config_ignore.settings ignored_config_entities '' -y"
+    # Import translation files
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/config/de.po --type=not-customized --overwrite"
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/dipas_stories/files/translations/dipas_stories.de.po --type=not-customized --overwrite"
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/dipas/files/translations/dipas.de.po --type=not-customized --overwrite"
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:import de /var/www/html/dipas/htdocs/drupal/modules/custom/masterportal/files/translations/masterportal.de.po --type=not-customized --overwrite"
 
-    # Import configuration and rebuild caches
-    su www-data -s /bin/bash -c "vendor/bin/drush config-import -y"
-    su www-data -s /bin/bash -c "vendor/bin/drush cache-rebuild"
+    # Apply translation updates
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:check"
+    su www-data -s /bin/bash -c "vendor/bin/drush locale:update"
 
     # Set correct file permissions after Drush install
     chown -R www-data:www-data /var/www/html/dipas/htdocs/drupal \
@@ -65,6 +68,9 @@ else
         && chmod 644 /var/www/html/dipas/config/drupal.services.yml \
         && chmod -R 775 /var/www/html/dipas/htdocs/drupal/sites/default/files \
         && find /var/www/html/dipas/htdocs/drupal/sites/default/files -type f -exec chmod 664 {} \;
+        
+    # Rebuild caches
+    su www-data -s /bin/bash -c "vendor/bin/drush cache-rebuild"
 
     echo "DIPAS setup is ready!"
 fi
