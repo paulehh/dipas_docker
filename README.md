@@ -37,7 +37,7 @@ docker-compose up --build
 ```
 
 ### Step 5: Wait for the Installation to Complete
-The installation process, configuration import, and cache rebuild will take some time. Please wait until it's complete.
+The installation process, translation import, and cache rebuild will take some time. Please wait until it's complete.
 
 
 ### Step 6: Access the DIPAS Application
@@ -47,13 +47,14 @@ Once the installation is complete, you can log in to the DIPAS system at:
 http://yourhost.de/drupal
 ```
 ### Step 7: Create DIPAS Template Proceeding (default)
-Go to --> DIPAS --> Proceedings --> Proceedings and "+ Add Proceeding". In the Interface click on "speichern". The default proceeding is your template from which all new proceedings will be build up.
+Go to --> DIPAS --> Verfahren --> Verfahren and "Verfahren hinzufügen". In the Interface click on "speichern". The default proceeding is your template from which all new proceedings will be build up.
 
 ### Step 8: Administer DIPAS Template Proceeding
 Follow these steps: https://wiki.dipas.org/index.php/Verfahrensvorlage_erstellen#Technische_Vorarbeiten
+Note: You do not need to import translation files since it was automatically done by drush during the setup process.
 
 ### Step 8: Create DIPAS Test Proceeding
-Go to --> DIPAS --> Proceedings --> Proceedings and "+ Add Proceeding". In the Interface type hostname e.g "test" (this will be the subdomain of your new proceeding) and name of your proceeding, e.g. "test". click speichern.
+Go to --> DIPAS --> Verfahren --> Verfahren and "Verfahren hinzufügen". In the Interface type hostname e.g "test" (this will be the subdomain of your new proceeding) and name of your proceeding, e.g. "test". click "speichern".
 
 ### Step 9: Access your Test Proceeding
 go to test.yourdomain.de/drupal and finalize the configuration of your proceeding or go to test.yourdomain.de to see the frontend.
