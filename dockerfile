@@ -2,16 +2,15 @@ FROM php:8.1-apache
 
 # Install necessary libraries, PHP extensions, PostgreSQL client, and tools for handling ZIP files
 RUN apt-get update && apt-get install -y \
-    libpq-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev postgresql-client unzip rsync gettext-base \
+    libpq-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev postgresql-client unzip rsync gettext-base wget \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo_pgsql \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and extract project files
-COPY ./dipas-3.3.1-navigator-3.1.1.zip /tmp/dipas.zip
-RUN unzip /tmp/dipas.zip -d /tmp/dipas \
-    && rsync -av /tmp/dipas/ /var/www/html/dipas/ \
-    && rm -rf /tmp/dipas /tmp/dipas.zip
+RUN wget -O /var/www/html/dipas.zip https://bitbucket.org/geowerkstatt-hamburg/dipas/downloads/dipas-os-3.3.2.zip \
+    && unzip /var/www/html/dipas.zip -d /var/www/html/dipas/ \
+    && rm -rf /var/www/html/dipas.zip
 
 # Copy configuration files
 COPY ./config/drupal/settings.php /var/www/html/dipas/htdocs/drupal/sites/default/settings.php
