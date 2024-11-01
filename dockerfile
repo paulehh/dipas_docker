@@ -1,11 +1,13 @@
 FROM php:8.1-apache
 
-# Install necessary libraries, PHP extensions, PostgreSQL client, and tools for handling ZIP files
+# Install necessary libraries, PHP extensions etc.
 RUN apt-get update && apt-get install -y \
     libpq-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+    libxml2-dev \
     postgresql-client unzip rsync gettext-base wget \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_pgsql xml openssl json curl mbstring opcache \
+    && docker-php-ext-install -j$(nproc) gd opcache xml \
+    && docker-php-ext-install pdo_pgsql \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable OPcache and configure recommended settings
