@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Ensure DRUPAL_SITE_DOMAIN is set and configure ServerName
+if [ -z "$DRUPAL_SITE_DOMAIN" ]; then
+    echo "Error: DRUPAL_SITE_DOMAIN is not set. Exiting."
+    exit 1
+else
+    echo "ServerName $DRUPAL_SITE_DOMAIN" >> /etc/apache2/apache2.conf
+fi
+
 # Check if the admin user exists
 if PGPASSWORD="${DB_PASSWORD}" psql -h "${DB_HOST}" -U "${DB_USER}" -d "${DB_NAME}" -c "SELECT 1 FROM users_field_data WHERE name = '${DRUPAL_ADMIN_USER}';" | grep -q "1"; then
     echo "Admin user '${DRUPAL_ADMIN_USER}' exists."
