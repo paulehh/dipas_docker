@@ -7,7 +7,7 @@ Welcome to the **DIPAS Docker Project**! This repository provides a test Docker 
 > **Prerequisites:** Make sure Docker and Docker Compose are installed on your system.
 
 ### 📂 Step 1: Clone the Repository
-Clone this repository to your local machine:
+Clone this repository to your host machine:
 ```bash
 git clone https://github.com/matlendzi/dipas_docker.git
 ```
