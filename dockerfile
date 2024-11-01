@@ -2,10 +2,20 @@ FROM php:8.1-apache
 
 # Install necessary libraries, PHP extensions, PostgreSQL client, and tools for handling ZIP files
 RUN apt-get update && apt-get install -y \
-    libpq-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev postgresql-client unzip rsync gettext-base wget \
+    libpq-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+    postgresql-client unzip rsync gettext-base wget \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_pgsql \
+    && docker-php-ext-install -j$(nproc) gd pdo_pgsql xml openssl json curl mbstring opcache \
     && rm -rf /var/lib/apt/lists/*
+
+# Enable OPcache and configure recommended settings
+RUN echo "zend_extension=opcache.so" > /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo "opcache.memory_consumption=128" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo "opcache.interned_strings_buffer=8" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo "opcache.max_accelerated_files=4000" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo "opcache.revalidate_freq=60" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo "opcache.fast_shutdown=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
+    && echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 # Copy and extract project files
 RUN wget -O /var/www/html/dipas.zip https://bitbucket.org/geowerkstatt-hamburg/dipas/downloads/dipas-os-3.3.2.zip \
@@ -22,7 +32,9 @@ RUN chmod +x /entrypoint.sh
 
 # Configure Apache and PHP
 COPY ./config/apache/yourdomain.de.conf /etc/apache2/sites-available/
-RUN a2enmod rewrite && a2dissite 000-default.conf && a2ensite yourdomain.de.conf \
+RUN a2enmod rewrite \
+    && a2dissite 000-default.conf \
+    && a2ensite yourdomain.de.conf \
     && echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini
 
 # Set entrypoint and default command
