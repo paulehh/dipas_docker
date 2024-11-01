@@ -732,6 +732,7 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
 $settings['trusted_host_patterns'] = [
     '^' . preg_quote('${DRUPAL_SITE_DOMAIN}') . '$',
     '^www\.' . preg_quote('${DRUPAL_SITE_DOMAIN}') . '$',
+    '^[a-z0-9-]+\.' . preg_quote('${DRUPAL_SITE_DOMAIN}') . '$',
 ];
 /**
  * The default list of directories that will be ignored by Drupal's file API.
