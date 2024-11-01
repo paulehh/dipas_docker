@@ -1,49 +1,58 @@
+# 🌐 DIPAS Docker Setup
 
-# DIPAS Docker
+Welcome to the **DIPAS Docker Project**! This repository provides a test Docker setup for [DIPAS (Digital Participation System)](https://bitbucket.org/geowerkstatt-hamburg/dipas/src). This setup is ideal for getting started with DIPAS installation and deployment on a test server.
 
-This project provides a Test Docker setup for the DIPAS (Digital Participation System: https://bitbucket.org/geowerkstatt-hamburg/dipas/src). This project was created for initial setup and installation of DIPAS e.g. to deploy it on a testserver. 
+## 🚀 Quick Start Guide
 
-## Steps to Get Started
+> **Prerequisites:** Make sure Docker and Docker Compose are installed on your system.
 
-Make sure that you have docker and docker-compose installed 
-
-### Step 1: Clone the Repository
-Clone the repository to your host machine:
-
+### 📂 Step 1: Clone the Repository
+Clone this repository to your local machine:
 ```bash
 git clone https://github.com/matlendzi/dipas_docker.git
 ```
 
-### Step 2: Customize Configuration Files
-- Edit the `.env` file to suit your environment (at least by specifying your domain as DRUPAL_SITE_DOMAIN)
-- Customize the `./config/apache/yourdomain.de.conf` by specfiying your domain as servername and alias.
-- OPTIONAL: Customize the `./config/drupal/drupal.services.yml` and `./config/drupal/settings.php` file to your needs 
+### ⚙️ Step 2: Customize Configuration Files
+1. **Edit the `.env` file:**  
+   Update the file with your specific environment variables (e.g., set `DRUPAL_SITE_DOMAIN` with your domain).
+   
+2. **Edit Apache Configuration:**  
+   Update `./config/apache/yourdomain.de.conf` to set your domain as the `ServerName` and `ServerAlias`.
+   
+3. *(Optional)* **Additional Customizations:**  
+   You may customize `./config/drupal/drupal.services.yml` and `./config/drupal/settings.php` to meet your needs.
 
-### Step 3: Build and Run the Docker Containers
-Run the following command to build the Docker containers and start the services:
-
+### 🛠️ Step 3: Build and Start Docker Containers
+Build the Docker images and start the containers with:
 ```bash
 docker-compose up --build
 ```
-### Step 5: Wait for the Installation to Complete
-The installation process, translation import, and cache rebuild will take some time. Please wait until it's complete.
 
-### Step 6: Access the DIPAS Application
-Once the installation is complete, you can log in to the DIPAS system at:
+### ⏳ Step 4: Installation in Progress
+The setup process will include installation, translation import, and cache rebuilding. This may take a few minutes—please wait until it completes.
+
+### 🌐 Step 5: Access the DIPAS Application
+Once installation finishes, access DIPAS at:
 ```
 http://yourhost.de/drupal
 ```
-### Step 7: Create DIPAS Template Proceeding (default)
-Go to --> DIPAS --> Verfahren --> Verfahren and "Verfahren hinzufügen". In the Interface click on "speichern". The default proceeding is your template from which all new proceedings will be build up.
 
-### Step 8: Administer DIPAS Template Proceeding
-Follow these steps: https://wiki.dipas.org/index.php/Verfahrensvorlage_erstellen#Technische_Vorarbeiten
-Note: You do not need to import translation files since it was automatically done by drush during the setup process.
+### 📝 Step 6: Create DIPAS Template Proceeding
+To create a template proceeding:
+- Navigate to **DIPAS > Verfahren > Verfahren**.
+- Click on **Verfahren hinzufügen**, then **Speichern**.  
+  This default proceeding will serve as the template for all new proceedings.
 
-### Step 8: Create DIPAS Test Proceeding
-Go to --> DIPAS --> Verfahren --> Verfahren and "Verfahren hinzufügen". In the Interface type hostname e.g "test" (this will be the subdomain of your new proceeding) and name of your proceeding, e.g. "test". click "speichern".
+### ⚙️ Step 7: Administer the Template Proceeding
+Follow [these steps](https://wiki.dipas.org/index.php/Verfahrensvorlage_erstellen#Technische_Vorarbeiten) for additional configurations.  
+*Note:* Translation files have already been imported automatically during the setup.
 
-### Step 9: Access your Test Proceeding
-go to test.yourdomain.de/drupal and finalize the configuration of your proceeding or go to test.yourdomain.de to see the frontend.
+### 🧪 Step 8: Create a DIPAS Test Proceeding
+To set up a test proceeding:
+- Go to **DIPAS > Verfahren > Verfahren** and click **Verfahren hinzufügen**.
+- Set the hostname (e.g., "test" for `test.yourdomain.de`) and provide a name for the proceeding.
+- Click **Speichern**.
 
-
+### 🌍 Step 9: Access Your Test Proceeding
+Access your test proceeding at `http://test.yourdomain.de/drupal`.  
+From here, you can finalize any additional configurations for your proceeding, or visit `http://test.yourdomain.de` to view the frontend.
