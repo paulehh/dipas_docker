@@ -1,8 +1,7 @@
 
 # DIPAS Docker
 
-This project provides a Test Docker setup for the DIPAS (Digital Participation System). The docker-compose.yml was created for initial setup and installation of DIPAS: https://bitbucket.org/geowerkstatt-hamburg/dipas/src
-
+This project provides a Test Docker setup for the DIPAS (Digital Participation System: https://bitbucket.org/geowerkstatt-hamburg/dipas/src). This project was created for initial setup and installation of DIPAS e.g. to deploy it on a testserver. 
 
 ## Steps to Get Started
 
@@ -16,8 +15,8 @@ git clone https://github.com/matlendzi/dipas_docker.git
 ```
 
 ### Step 2: Customize Configuration Files
-- Edit the `.env` file to suit your environment.
-- Customize the `./config/apache/yourdomain.de.conf` file with the settings for your domain.
+- Edit the `.env` file to suit your environment (at least by specifying your domain as DRUPAL_SITE_DOMAIN)
+- Customize the `./config/apache/yourdomain.de.conf` by specfiying your domain as servername and alias.
 - OPTIONAL: Customize the `./config/drupal/drupal.services.yml` and `./config/drupal/settings.php` file to your needs 
 
 ### Step 3: Build and Run the Docker Containers
