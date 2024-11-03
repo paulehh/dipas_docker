@@ -1,6 +1,10 @@
 # 🌐 DIPAS Docker Setup
 
-Welcome to the **DIPAS Docker Project**! This repository provides a test Docker setup for [DIPAS (Digital Participation System)](https://bitbucket.org/geowerkstatt-hamburg/dipas/src). This setup is ideal for getting started with DIPAS installation and deployment on a test server.
+Welcome to the **DIPAS Docker Project**! This repository provides a test Docker setup for [DIPAS (Digital Participation System)](https://bitbucket.org/geowerkstatt-hamburg/dipas/src). This setup is ideal for getting started with DIPAS installation and deployment on a test server. 
+
+Here you can find also a short video showing the process:
+
+[![YouTube](http://i.ytimg.com/vi/TCiz3GqFRjM/hqdefault.jpg)](https://www.youtube.com/watch?v=TCiz3GqFRjM)
 
 ## 🚀 Quick Start Guide
 
