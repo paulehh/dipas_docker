@@ -8,7 +8,7 @@ Here you can find also a short video showing the process:
 
 ## 🚀 Quick Start Guide
 
-> **Prerequisites:** Make sure Docker and Docker Compose are installed on your system (git optional).
+> **Prerequisites:** Host machine with "Docker", "Docker-Compose" and a text editor (e.g. "nano") installed on your system ("git" optional).
 
 ### 📂 Step 1: Clone the Repository
 Clone (or download) this repository to your host machine:
